@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スタディクエスト - 中学生テスト対策</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B9D;
+            --secondary: #FEC260;
+            --accent: #9B59B6;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --bg-dark: #1A1A2E;
+            --bg-light: #16213E;
+            --text-light: #EAEAEA;
+            --card-bg: #0F3460;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #16213E 50%, #0F3460 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 157, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(254, 194, 96, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 107, 157, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.8rem;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: none;
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2) 0%, rgba(15, 52, 96, 0.6) 100%);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .subject-card {
+            background: rgba(15, 52, 96, 0.7);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .subject-card:hover::before {
+            left: 100%;
+        }
+
+        .subject-card:hover {
+            transform: scale(1.05) rotate(1deg);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.3);
+        }
+
+        .subject-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .subject-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .quiz-container {
+            background: rgba(15, 52, 96, 0.8);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 30px 0;
+            display: none;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 107, 157, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .option:hover::before {
+            width: 300%;
+            height: 300%;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            transform: translateX(10px);
+        }
+
+        .option.selected {
+            border-color: var(--secondary);
+            background: rgba(254, 194, 96, 0.2);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(46, 204, 113, 0.2);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        .btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            width: 300%;
+            height: 300%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .result-screen {
+            text-align: center;
+            padding: 40px;
+            display: none;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .result-screen.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 10px 40px rgba(255, 107, 157, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .weakness-analysis {
+            background: rgba(15, 52, 96, 0.6);
+            border: 2px solid var(--danger);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .weakness-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .weakness-item {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+
+        /* 設定画面のスタイル */
+        .settings-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            z-index: 1000;
+            display: none;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .settings-screen.active {
+            display: block;
+        }
+
+        .settings-content {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 40px;
+            background: rgba(15, 52, 96, 0.9);
+            border-radius: 30px;
+            border: 2px solid var(--primary);
+            position: relative;
+        }
+
+        .close-settings {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-settings:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .settings-header {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subject-settings {
+            margin-bottom: 40px;
+        }
+
+        .subject-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.15) 0%, rgba(155, 89, 182, 0.15) 100%);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .subject-header-icon {
+            font-size: 2rem;
+        }
+
+        .subject-header-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            flex: 1;
+        }
+
+        .select-all-btn {
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .select-all-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .topic-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .topic-label {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            flex: 1;
+        }
+
+        .grade-badge {
+            padding: 4px 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            white-space: nowrap;
+        }
+
+        .topic-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .topic-checkbox.checked {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-color: var(--accent);
+        }
+
+        .topic-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .save-settings-btn {
+            display: block;
+            margin: 40px auto 0;
+            padding: 18px 60px;
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+            }
+        }
+
+        /* モバイル対応 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .settings-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-content {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .settings-header {
+                font-size: 1.8rem;
+            }
+
+            .quick-select-bar {
+                flex-direction: column;
+            }
+
+            .quick-btn {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+                font-size: 2.5rem;
+            }
+        }
+
+        .quick-select-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+        }
+
+        .quick-btn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .quick-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <button class="settings-btn" onclick="openSettings()">⚙️</button>
+
+    <div class="container">
+        <header>
+            <h1>📚 スタディクエスト</h1>
+            <p class="subtitle">楽しく学んで、テストで高得点を目指そう!</p>
+        </header>
+
+        <div id="homeScreen">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalQuestions">0</span>
+                    <span class="stat-label">解いた問題数</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="averageScore">0%</span>
+                    <span class="stat-label">平均正答率</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="studyStreak">0</span>
+                    <span class="stat-label">連続学習日数</span>
+                </div>
+            </div>
+
+            <div class="subject-grid">
+                <div class="subject-card" onclick="startQuiz('数学')">
+                    <span class="subject-icon">🔢</span>
+                    <div class="subject-name">数学</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <p style="opacity: 0.7; margin-top: 10px;">正答率: 75%</p>
+                </div>
+
+                <div class="subject-card" onclick="startQuiz('英語')">
+                    <span class="subject-icon">🌐</span>
+                    <div class="subject-name">英語</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 68%"></div>
+                    </div>
+                    <p style="opacity: 0.7; margin-top: 10px;">正答率: 68%</p>
+                </div>
+
+                <div class="subject-card" onclick="startQuiz('理科')">
+                    <span class="subject-icon">🔬</span>
+                    <div class="subject-name">理科</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 82%"></div>
+                    </div>
+                    <p style="opacity: 0.7; margin-top: 10px;">正答率: 82%</p>
+                </div>
+
+                <div class="subject-card" onclick="startQuiz('社会')">
+                    <span class="subject-icon">🗺️</span>
+                    <div class="subject-name">社会</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%"></div>
+                    </div>
+                    <p style="opacity: 0.7; margin-top: 10px;">正答率: 70%</p>
+                </div>
+
+                <div class="subject-card" onclick="startQuiz('国語')">
+                    <span class="subject-icon">📖</span>
+                    <div class="subject-name">国語</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <p style="opacity: 0.7; margin-top: 10px;">正答率: 65%</p>
+                </div>
+
+                <div class="subject-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.3) 0%, rgba(155, 89, 182, 0.3) 100%); border: 2px solid var(--danger);" onclick="startReviewQuiz()">
+                    <span class="subject-icon">⚠️</span>
+                    <div class="subject-name" style="color: var(--danger);">間違えた問題</div>
+                    <div style="font-size: 2rem; font-weight: 700; color: var(--danger); margin: 15px 0;" id="wrongQuestionsCount">0</div>
+                    <p style="opacity: 0.9; margin-top: 10px;">復習して完璧にしよう!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="quizScreen" class="quiz-container">
+            <h2 id="subjectTitle" style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 10px;"></h2>
+            <p style="opacity: 0.7; margin-bottom: 30px;">問題 <span id="questionNumber">1</span> / <span id="totalQuestionsInQuiz">5</span></p>
+            
+            <div class="question" id="questionText"></div>
+            
+            <div class="options" id="optionsContainer"></div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" id="submitBtn" onclick="checkAnswer()" disabled>回答する</button>
+                <button class="btn btn-secondary" onclick="showHome()">戻る</button>
+            </div>
+        </div>
+
+        <div id="resultScreen" class="result-screen">
+            <h2 style="font-family: 'Poppins', sans-serif; font-size: 2.5rem; margin-bottom: 20px;">🎉 クイズ完了!</h2>
+            
+            <div class="score-circle" id="finalScore">0%</div>
+            
+            <p style="font-size: 1.3rem; margin: 20px 0;">
+                <span id="correctCount">0</span> / <span id="totalCount">5</span> 問正解
+            </p>
+
+            <div class="weakness-analysis" id="weaknessSection" style="display: none;">
+                <div class="weakness-title">
+                    <span>⚠️</span>
+                    <span>苦手分野の分析</span>
+                </div>
+                <div id="weaknessContent"></div>
+            </div>
+
+            <div class="button-group" style="justify-content: center;">
+                <button class="btn btn-primary" onclick="retryQuiz()">もう一度挑戦</button>
+                <button class="btn btn-secondary" onclick="showHome()">ホームに戻る</button>
+                <button class="btn btn-secondary" onclick="clearWrongAnswers()" id="clearWrongBtn" style="display: none;">間違えた問題をリセット</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 設定画面 -->
+    <div id="settingsScreen" class="settings-screen">
+        <div class="settings-content">
+            <div class="close-settings" onclick="closeSettings()">×</div>
+            <h2 class="settings-header">⚙️ テスト範囲設定</h2>
+            
+            <div class="quick-select-bar">
+                <button class="quick-btn" onclick="selectAllTopics()">🎯 すべて選択</button>
+                <button class="quick-btn" onclick="clearAllTopics()">🗑️ すべて解除</button>
+                <button class="quick-btn" onclick="selectGrade1()">1️⃣ 中1のみ</button>
+                <button class="quick-btn" onclick="selectGrade2()">2️⃣ 中2のみ</button>
+                <button class="quick-btn" onclick="selectGrade3()">3️⃣ 中3のみ</button>
+                <button class="quick-btn" onclick="selectForExam()">📚 入試対策(全範囲)</button>
+            </div>
+
+            <div id="settingsSubjects"></div>
+
+            <button class="btn btn-primary save-settings-btn" onclick="saveSettings()">💾 設定を保存してクイズを始める</button>
+        </div>
+    </div>
+
+    <script>
+        // 中学校学習要綱に基づく単元データ
+        const curriculum = {
+            '数学': {
+                1: ['正の数・負の数', '文字式', '一次方程式', '比例と反比例', '平面図形', '空間図形', 'データの活用'],
+                2: ['式の計算', '連立方程式', '一次関数', '図形の性質と証明', '三角形と四角形', '確率'],
+                3: ['多項式', '平方根', '二次方程式', '二次関数', '相似な図形', '円の性質', '三平方の定理', '標本調査']
+            },
+            '英語': {
+                1: ['be動詞', '一般動詞', '複数形', '命令文', '疑問詞', '現在進行形', '助動詞can', '過去形'],
+                2: ['未来の文', '接続詞', '不定詞', '動名詞', '比較', '受動態', '現在完了'],
+                3: ['現在完了進行形', '不定詞の応用', '分詞', '関係代名詞', '仮定法', '間接疑問文']
+            },
+            '理科': {
+                1: ['身近な生物', '植物の分類', '物質の性質', '気体の性質', '状態変化', '光の性質', '音の性質', '力と圧力', '大地の変化'],
+                2: ['化学変化と原子・分子', '化学変化と物質の質量', '生物の体のつくり', '動物の分類', '電流と回路', '電流の正体', '磁界', '天気とその変化'],
+                3: ['運動とエネルギー', '仕事とエネルギー', '化学変化とイオン', '酸・アルカリ', '生命の連続性', '遺伝の規則性', '天体の動き', '月と惑星', '自然と人間']
+            },
+            '社会': {
+                1: ['世界の姿', 'アジア', 'ヨーロッパ', 'アフリカ', '南北アメリカ', 'オセアニア', '古代文明', '日本の成り立ち', '飛鳥時代', '奈良時代', '平安時代'],
+                2: ['鎌倉時代', '室町時代', '安土桃山時代', '江戸時代', '明治維新', '日清・日露戦争', '第一次世界大戦', '世界恐慌', '第二次世界大戦', '日本国憲法', '冷戦'],
+                3: ['現代の日本と世界', '人権と日本国憲法', '民主政治', '地方自治', '経済のしくみ', '消費生活', '生産と労働', '財政と福祉', '国際社会', '地球環境問題']
+            },
+            '国語': {
+                1: ['説明的文章の読解', '文学的文章の読解', '詩の鑑賞', '古典入門', '漢字・語句', '文法(品詞)', '作文・表現'],
+                2: ['論説文の読解', '小説の読解', '短歌・俳句', '古文', '漢文入門', '文法(活用)', '敬語', '話し合い・討論'],
+                3: ['評論文の読解', '文学作品の鑑賞', '和歌・俳諧', '古典文学', '漢文', '文法(総合)', '小論文', 'プレゼンテーション']
+            }
+        };
+
+        // クイズデータベース（各単元に対応）
+        const quizDatabase = {
+            '数学': {
+                '正の数・負の数': [
+                    { question: '(-3) + (+5) の計算結果は?', options: ['-8', '-2', '+2', '+8'], correct: 2, topic: '正の数・負の数' },
+                    { question: '(-4) × (-2) の計算結果は?', options: ['-8', '-6', '+6', '+8'], correct: 3, topic: '正の数・負の数' }
+                ],
+                '一次方程式': [
+                    { question: '2x + 5 = 13 を解くと?', options: ['x = 3', 'x = 4', 'x = 5', 'x = 6'], correct: 1, topic: '一次方程式' },
+                    { question: '3x - 7 = 2 を解くと?', options: ['x = 2', 'x = 3', 'x = 4', 'x = 5'], correct: 1, topic: '一次方程式' }
+                ],
+                '平面図形': [
+                    { question: '三角形の内角の和は?', options: ['90度', '180度', '270度', '360度'], correct: 1, topic: '平面図形' }
+                ],
+                '平方根': [
+                    { question: '√16 の値は?', options: ['2', '4', '8', '16'], correct: 1, topic: '平方根' }
+                ],
+                '一次関数': [
+                    { question: 'y = 2x + 3 のグラフの傾きは?', options: ['1', '2', '3', '4'], correct: 1, topic: '一次関数' }
+                ]
+            },
+            '英語': {
+                'be動詞': [
+                    { question: '次の空欄に入る語は? I ( ) a student.', options: ['am', 'is', 'are', 'be'], correct: 0, topic: 'be動詞' }
+                ],
+                '一般動詞': [
+                    { question: '次の空欄に入る語は? I ( ) to school every day.', options: ['go', 'goes', 'going', 'went'], correct: 0, topic: '一般動詞' }
+                ],
+                '過去形': [
+                    { question: '"She plays tennis." を過去形にすると?', options: ['She play tennis.', 'She playing tennis.', 'She played tennis.', 'She has played tennis.'], correct: 2, topic: '過去形' }
+                ],
+                '比較': [
+                    { question: '"beautiful"の比較級は?', options: ['beautifuler', 'more beautiful', 'most beautiful', 'beautifulest'], correct: 1, topic: '比較' }
+                ],
+                '不定詞': [
+                    { question: '"彼は野球が上手です"を英語で?', options: ['He is good at baseball.', 'He is good to baseball.', 'He is good for baseball.', 'He is good with baseball.'], correct: 0, topic: '不定詞' }
+                ]
+            },
+            '理科': {
+                '植物の分類': [
+                    { question: '光合成に必要なものは?', options: ['二酸化炭素', '酸素', '窒素', 'メタン'], correct: 0, topic: '植物の分類' }
+                ],
+                '化学変化と原子・分子': [
+                    { question: '水の化学式は?', options: ['H2O', 'CO2', 'O2', 'NaCl'], correct: 0, topic: '化学変化と原子・分子' }
+                ],
+                '天体の動き': [
+                    { question: '地球から最も近い惑星は?', options: ['火星', '金星', '水星', '木星'], correct: 1, topic: '天体の動き' }
+                ],
+                '電流と回路': [
+                    { question: '電流の単位は?', options: ['V (ボルト)', 'A (アンペア)', 'Ω (オーム)', 'W (ワット)'], correct: 1, topic: '電流と回路' }
+                ],
+                '生物の体のつくり': [
+                    { question: '人間の骨は何本?', options: ['約100本', '約200本', '約300本', '約400本'], correct: 1, topic: '生物の体のつくり' }
+                ]
+            },
+            '社会': {
+                '世界の姿': [
+                    { question: '世界で最も人口の多い国は?', options: ['アメリカ', 'インド', '中国', 'ロシア'], correct: 1, topic: '世界の姿' }
+                ],
+                '日本の成り立ち': [
+                    { question: '日本の首都は?', options: ['大阪', '京都', '東京', '名古屋'], correct: 2, topic: '日本の成り立ち' }
+                ],
+                '鎌倉時代': [
+                    { question: '鎌倉幕府を開いたのは?', options: ['源頼朝', '足利尊氏', '徳川家康', '織田信長'], correct: 0, topic: '鎌倉時代' }
+                ],
+                '民主政治': [
+                    { question: '国会は何院制?', options: ['一院制', '二院制', '三院制', '四院制'], correct: 1, topic: '民主政治' }
+                ],
+                '第二次世界大戦': [
+                    { question: '第二次世界大戦が終わった年は?', options: ['1943年', '1944年', '1945年', '1946年'], correct: 2, topic: '第二次世界大戦' }
+                ]
+            },
+            '国語': {
+                '文学的文章の読解': [
+                    { question: '「山月記」の作者は?', options: ['夏目漱石', '芥川龍之介', '中島敦', '太宰治'], correct: 2, topic: '文学的文章の読解' }
+                ],
+                '漢字・語句': [
+                    { question: '次の漢字の読み方は? 「憂鬱」', options: ['ゆううつ', 'ゆうつ', 'うゆつ', 'ゆううち'], correct: 0, topic: '漢字・語句' }
+                ],
+                '短歌・俳句': [
+                    { question: '俳句は何音で構成される?', options: ['12音', '14音', '17音', '20音'], correct: 2, topic: '短歌・俳句' }
+                ],
+                '文法(活用)': [
+                    { question: '「走る」の未然形は?', options: ['走ら', '走り', '走る', '走れ'], correct: 0, topic: '文法(活用)' }
+                ],
+                '文学的文章の読解': [
+                    { question: '「猫をかぶる」の意味は?', options: ['本性を隠しておとなしく振る舞う', '猫を大切にする', '寒さに耐える', '秘密を守る'], correct: 0, topic: '文学的文章の読解' }
+                ]
+            }
+        };
+
+        let selectedTopics = {};
+        let currentSubject = '';
+        let currentQuestionIndex = 0;
+        let selectedAnswer = null;
+        let score = 0;
+        let wrongAnswers = [];
+        let allWrongAnswers = []; // 全ての間違えた問題を保存
+        let isReviewMode = false; // 復習モードかどうか
+        let stats = {
+            totalQuestions: 0,
+            totalCorrect: 0,
+            studyStreak: 0
+        };
+
+        // 初期化: すべての単元を選択状態にする
+        function initializeSettings() {
+            selectedTopics = {};
+            for (let subject in curriculum) {
+                selectedTopics[subject] = {};
+                for (let grade in curriculum[subject]) {
+                    selectedTopics[subject][grade] = [...curriculum[subject][grade]];
+                }
+            }
+            // LocalStorageから設定を読み込む
+            const saved = localStorage.getItem('studyQuestSettings');
+            if (saved) {
+                try {
+                    selectedTopics = JSON.parse(saved);
+                } catch (e) {
+                    console.error('設定の読み込みに失敗しました', e);
+                }
+            }
+            
+            // 間違えた問題を読み込む
+            const savedWrong = localStorage.getItem('studyQuestWrongAnswers');
+            if (savedWrong) {
+                try {
+                    allWrongAnswers = JSON.parse(savedWrong);
+                    updateWrongAnswersCount();
+                } catch (e) {
+                    console.error('間違えた問題の読み込みに失敗しました', e);
+                }
+            }
+        }
+
+        function updateWrongAnswersCount() {
+            const count = allWrongAnswers.length;
+            const countElement = document.getElementById('wrongQuestionsCount');
+            if (countElement) {
+                countElement.textContent = count;
+            }
+        }
+
+        function saveWrongAnswers() {
+            try {
+                localStorage.setItem('studyQuestWrongAnswers', JSON.stringify(allWrongAnswers));
+                updateWrongAnswersCount();
+            } catch (e) {
+                console.error('間違えた問題の保存に失敗しました', e);
+            }
+        }
+
+        function startReviewQuiz() {
+            if (allWrongAnswers.length === 0) {
+                alert('まだ間違えた問題がありません。\n先にクイズに挑戦してみましょう！');
+                return;
+            }
+
+            isReviewMode = true;
+            currentSubject = '復習モード';
+            
+            // 間違えた問題をシャッフル
+            const shuffled = [...allWrongAnswers].sort(() => 0.5 - Math.random());
+            window.currentQuestions = shuffled.slice(0, Math.min(10, shuffled.length));
+            
+            currentQuestionIndex = 0;
+            selectedAnswer = null;
+            score = 0;
+            wrongAnswers = [];
+
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('quizScreen').classList.add('active');
+            document.getElementById('resultScreen').classList.remove('active');
+            
+            document.getElementById('subjectTitle').textContent = '⚠️ 間違えた問題の復習';
+            document.getElementById('totalQuestionsInQuiz').textContent = window.currentQuestions.length;
+            
+            loadQuestion();
+        }
+
+        function openSettings() {
+            document.getElementById('settingsScreen').classList.add('active');
+            renderSettings();
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsScreen').classList.remove('active');
+        }
+
+        function renderSettings() {
+            const container = document.getElementById('settingsSubjects');
+            container.innerHTML = '';
+
+            const subjects = {
+                '数学': '🔢',
+                '英語': '🌐',
+                '理科': '🔬',
+                '社会': '🗺️',
+                '国語': '📖'
+            };
+
+            for (let subject in subjects) {
+                const subjectDiv = document.createElement('div');
+                subjectDiv.className = 'subject-settings';
+
+                // 全学年の単元を一つのリストに
+                let allTopicsHTML = '';
+                for (let grade = 1; grade <= 3; grade++) {
+                    const topics = curriculum[subject][grade] || [];
+                    topics.forEach(topic => {
+                        const isChecked = isTopicSelected(subject, grade, topic);
+                        const checkId = `check-${subject}-${grade}-${topic.replace(/[・\s]/g, '_')}`;
+                        allTopicsHTML += `
+                            <div class="topic-item" onclick="toggleTopic('${subject}', ${grade}, '${topic.replace(/'/g, "\\'")}')">
+                                <div class="topic-checkbox ${isChecked ? 'checked' : ''}" id="${checkId}"></div>
+                                <div class="topic-label">${topic}</div>
+                                <div class="grade-badge">中${grade}</div>
+                            </div>
+                        `;
+                    });
+                }
+
+                subjectDiv.innerHTML = `
+                    <div class="subject-header">
+                        <span class="subject-header-icon">${subjects[subject]}</span>
+                        <span class="subject-header-title">${subject}</span>
+                        <button class="select-all-btn" onclick="event.stopPropagation(); toggleAllSubject('${subject}')">
+                            すべて選択/解除
+                        </button>
+                    </div>
+                    <div class="topics-grid">
+                        ${allTopicsHTML}
+                    </div>
+                `;
+
+                container.appendChild(subjectDiv);
+            }
+        }
+
+        function isTopicSelected(subject, grade, topic) {
+            return selectedTopics[subject] && 
+                   selectedTopics[subject][grade] && 
+                   selectedTopics[subject][grade].includes(topic);
+        }
+
+        function toggleTopic(subject, grade, topic) {
+            if (!selectedTopics[subject]) selectedTopics[subject] = {};
+            if (!selectedTopics[subject][grade]) selectedTopics[subject][grade] = [];
+
+            const index = selectedTopics[subject][grade].indexOf(topic);
+            if (index > -1) {
+                selectedTopics[subject][grade].splice(index, 1);
+            } else {
+                selectedTopics[subject][grade].push(topic);
+            }
+
+            const checkboxId = `check-${subject}-${grade}-${topic.replace(/[・\s]/g, '_')}`;
+            const checkbox = document.getElementById(checkboxId);
+            if (checkbox) {
+                checkbox.classList.toggle('checked');
+            }
+        }
+
+        function toggleAllSubject(subject) {
+            const allSelected = isSubjectAllSelected(subject);
+            
+            for (let grade = 1; grade <= 3; grade++) {
+                const topics = curriculum[subject][grade] || [];
+                if (!selectedTopics[subject]) selectedTopics[subject] = {};
+                
+                if (allSelected) {
+                    selectedTopics[subject][grade] = [];
+                } else {
+                    selectedTopics[subject][grade] = [...topics];
+                }
+            }
+            
+            renderSettings();
+        }
+
+        function isSubjectAllSelected(subject) {
+            for (let grade = 1; grade <= 3; grade++) {
+                const topics = curriculum[subject][grade] || [];
+                if (!topics.every(topic => isTopicSelected(subject, grade, topic))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function selectAllTopics() {
+            for (let subject in curriculum) {
+                for (let grade in curriculum[subject]) {
+                    selectedTopics[subject] = selectedTopics[subject] || {};
+                    selectedTopics[subject][grade] = [...curriculum[subject][grade]];
+                }
+            }
+            renderSettings();
+        }
+
+        function clearAllTopics() {
+            for (let subject in curriculum) {
+                selectedTopics[subject] = {};
+                for (let grade in curriculum[subject]) {
+                    selectedTopics[subject][grade] = [];
+                }
+            }
+            renderSettings();
+        }
+
+        function selectGrade1() {
+            clearAllTopics();
+            for (let subject in curriculum) {
+                if (curriculum[subject][1]) {
+                    selectedTopics[subject] = selectedTopics[subject] || {};
+                    selectedTopics[subject][1] = [...curriculum[subject][1]];
+                }
+            }
+            renderSettings();
+        }
+
+        function selectGrade2() {
+            clearAllTopics();
+            for (let subject in curriculum) {
+                if (curriculum[subject][2]) {
+                    selectedTopics[subject] = selectedTopics[subject] || {};
+                    selectedTopics[subject][2] = [...curriculum[subject][2]];
+                }
+            }
+            renderSettings();
+        }
+
+        function selectGrade3() {
+            clearAllTopics();
+            for (let subject in curriculum) {
+                if (curriculum[subject][3]) {
+                    selectedTopics[subject] = selectedTopics[subject] || {};
+                    selectedTopics[subject][3] = [...curriculum[subject][3]];
+                }
+            }
+            renderSettings();
+        }
+
+        function selectForExam() {
+            selectAllTopics();
+        }
+
+        function saveSettings() {
+            // LocalStorageに保存
+            try {
+                localStorage.setItem('studyQuestSettings', JSON.stringify(selectedTopics));
+                closeSettings();
+                
+                // 選択された項目数を計算
+                let totalSelected = 0;
+                for (let subject in selectedTopics) {
+                    for (let grade in selectedTopics[subject]) {
+                        totalSelected += selectedTopics[subject][grade].length;
+                    }
+                }
+                
+                alert(`✅ 設定を保存しました！\n${totalSelected}個の単元が選択されています。`);
+            } catch (e) {
+                alert('⚠️ 設定の保存に失敗しました。ブラウザの設定を確認してください。');
+                console.error('保存エラー:', e);
+            }
+        }
+
+        function getQuestionsForSubject(subject) {
+            const questions = [];
+            const subjectTopics = selectedTopics[subject];
+            
+            if (!subjectTopics) return [];
+
+            for (let grade in subjectTopics) {
+                const topics = subjectTopics[grade];
+                topics.forEach(topic => {
+                    if (quizDatabase[subject] && quizDatabase[subject][topic]) {
+                        questions.push(...quizDatabase[subject][topic]);
+                    }
+                });
+            }
+
+            // ランダムに5問選択
+            const shuffled = questions.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, Math.min(5, shuffled.length));
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (3 + Math.random() * 2) + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        function startQuiz(subject) {
+            isReviewMode = false; // 通常モードに戻す
+            currentSubject = subject;
+            const questions = getQuestionsForSubject(subject);
+            
+            if (questions.length === 0) {
+                alert('選択した範囲に問題がありません。設定画面で範囲を選択してください。');
+                openSettings();
+                return;
+            }
+
+            window.currentQuestions = questions;
+            currentQuestionIndex = 0;
+            selectedAnswer = null;
+            score = 0;
+            wrongAnswers = [];
+
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('quizScreen').classList.add('active');
+            document.getElementById('resultScreen').classList.remove('active');
+            
+            document.getElementById('subjectTitle').textContent = subject + ' クイズ';
+            document.getElementById('totalQuestionsInQuiz').textContent = questions.length;
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const questions = window.currentQuestions;
+            const currentQuestion = questions[currentQuestionIndex];
+            
+            document.getElementById('questionNumber').textContent = currentQuestionIndex + 1;
+            document.getElementById('questionText').textContent = currentQuestion.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            currentQuestion.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            selectedAnswer = null;
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        function selectOption(index) {
+            selectedAnswer = index;
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, i) => {
+                option.classList.remove('selected');
+                if (i === index) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function checkAnswer() {
+            const questions = window.currentQuestions;
+            const currentQuestion = questions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            options[currentQuestion.correct].classList.add('correct');
+            
+            if (selectedAnswer === currentQuestion.correct) {
+                score++;
+                
+                // 復習モードで正解した場合、間違えた問題リストから削除
+                if (isReviewMode) {
+                    const index = allWrongAnswers.findIndex(q => 
+                        q.question === currentQuestion.question && 
+                        q.topic === currentQuestion.topic
+                    );
+                    if (index > -1) {
+                        allWrongAnswers.splice(index, 1);
+                        saveWrongAnswers();
+                    }
+                }
+            } else {
+                options[selectedAnswer].classList.add('wrong');
+                wrongAnswers.push({
+                    question: currentQuestion.question,
+                    topic: currentQuestion.topic,
+                    yourAnswer: currentQuestion.options[selectedAnswer],
+                    correctAnswer: currentQuestion.options[currentQuestion.correct]
+                });
+                
+                // 通常モードで間違えた場合、間違えた問題リストに追加（重複チェック）
+                if (!isReviewMode) {
+                    const exists = allWrongAnswers.some(q => 
+                        q.question === currentQuestion.question && 
+                        q.topic === currentQuestion.topic
+                    );
+                    if (!exists) {
+                        allWrongAnswers.push({
+                            question: currentQuestion.question,
+                            options: currentQuestion.options,
+                            correct: currentQuestion.correct,
+                            topic: currentQuestion.topic
+                        });
+                        saveWrongAnswers();
+                    }
+                }
+            }
+            
+            stats.totalQuestions++;
+            if (selectedAnswer === currentQuestion.correct) {
+                stats.totalCorrect++;
+            }
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 1500);
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').classList.remove('active');
+            document.getElementById('resultScreen').classList.add('active');
+            
+            const questions = window.currentQuestions;
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = percentage + '%';
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = questions.length;
+            
+            updateStats();
+            
+            // 復習モードの場合、クリアボタンを表示
+            const clearBtn = document.getElementById('clearWrongBtn');
+            if (clearBtn) {
+                clearBtn.style.display = isReviewMode ? 'block' : 'none';
+            }
+            
+            if (wrongAnswers.length > 0) {
+                document.getElementById('weaknessSection').style.display = 'block';
+                const weaknessContent = document.getElementById('weaknessContent');
+                weaknessContent.innerHTML = '';
+                
+                wrongAnswers.forEach(wa => {
+                    const item = document.createElement('div');
+                    item.className = 'weakness-item';
+                    item.innerHTML = `
+                        <strong>分野: ${wa.topic}</strong><br>
+                        <p style="margin-top: 8px; opacity: 0.9;">問題: ${wa.question}</p>
+                        <p style="margin-top: 5px; color: var(--danger);">あなたの回答: ${wa.yourAnswer}</p>
+                        <p style="margin-top: 5px; color: var(--success);">正解: ${wa.correctAnswer}</p>
+                    `;
+                    weaknessContent.appendChild(item);
+                });
+            } else {
+                document.getElementById('weaknessSection').style.display = 'none';
+            }
+            
+            // 復習モードで全問正解の場合
+            if (isReviewMode && wrongAnswers.length === 0 && score === questions.length) {
+                setTimeout(() => {
+                    alert('🎉 素晴らしい！復習問題を全問正解しました！\n間違えた問題リストから削除されました。');
+                }, 500);
+            }
+        }
+
+        function clearWrongAnswers() {
+            if (confirm('間違えた問題をすべてリセットしますか？\nこの操作は取り消せません。')) {
+                allWrongAnswers = [];
+                saveWrongAnswers();
+                alert('✅ 間違えた問題リストをクリアしました！');
+                showHome();
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalQuestions').textContent = stats.totalQuestions;
+            const avgScore = stats.totalQuestions > 0 ? 
+                Math.round((stats.totalCorrect / stats.totalQuestions) * 100) : 0;
+            document.getElementById('averageScore').textContent = avgScore + '%';
+        }
+
+        function retryQuiz() {
+            if (isReviewMode) {
+                startReviewQuiz();
+            } else {
+                startQuiz(currentSubject);
+            }
+        }
+
+        function showHome() {
+            document.getElementById('homeScreen').style.display = 'block';
+            document.getElementById('quizScreen').classList.remove('active');
+            document.getElementById('resultScreen').classList.remove('active');
+        }
+
+        // 初期化
+        initializeSettings();
+        createParticles();
+        updateStats();
+    </script>
+</body>
+</html>
